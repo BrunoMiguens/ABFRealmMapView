@@ -15,42 +15,42 @@ import RealmMapView
 class ViewController: UIViewController {
 
     @IBOutlet var mapView: RealmMapView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         /**
         *   Set the Realm path to be the Restaurant Realm path
         */
-        
+
         var config = Realm.Configuration.defaultConfiguration
 
         config.fileURL = URL(string: ABFRestaurantScoresPath())
-        
+
         self.mapView.realmConfiguration = config
-        
+
         self.mapView.delegate = self
-        
+
         /**
         *  Set the cluster title format string
         *  $OBJECTSCOUNT variable track cluster count
         */
         self.mapView.fetchedResultsController.clusterTitleFormatString = "$OBJECTSCOUNT restaurants in this area"
-        
+
         /**
         *  Add filtering to the result set in addition to the bounding box filter
         */
         self.mapView.basePredicate = NSPredicate(format: "name BEGINSWITH 'A'")
-        
+
         /**
         *  Limit the map results
         */
         self.mapView.resultsLimit = 200
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         self.mapView.refreshMapView()
     }
 
@@ -63,19 +63,18 @@ class ViewController: UIViewController {
 extension ViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let safeObjects = ClusterAnnotationView.safeObjects(forClusterAnnotationView: view) {
-            
+
             if let firstObjectName = safeObjects.first?.toObject(ABFRestaurantObject.self).name {
                 print("First Object: \(firstObjectName)")
             }
-            
+
             print("Count: \(safeObjects.count)")
         }
     }
-    
+
     func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
         if self.mapView.fetchedResultsController.safeObjects.count == self.mapView.resultsLimit {
             print("Hit Results Limit!")
         }
     }
 }
-

@@ -156,6 +156,8 @@
 				F9FFE4B21E0F803100A739BC /* Frameworks */,
 				F9FFE4B31E0F803100A739BC /* Headers */,
 				F9FFE4B41E0F803100A739BC /* Resources */,
+				E13E6B03CF032C5D3CBD4F05 /* Tailor */,
+				29307E767F94EE59EBA86015 /* Tailor */,
 			);
 			buildRules = (
 			);
@@ -240,6 +242,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		29307E767F94EE59EBA86015 /* Tailor */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Tailor;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if hash tailor 2>/dev/null; then\n  tailor\nelse\n  echo \"warning: Please install Tailor from https://tailor.sh\"\nfi";
+			showEnvVarsInLog = 1;
+		};
+		E13E6B03CF032C5D3CBD4F05 /* Tailor */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Tailor;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if hash tailor 2>/dev/null; then\n  tailor\nelse\n  echo \"warning: Please install Tailor from https://tailor.sh\"\nfi";
+			showEnvVarsInLog = 1;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F9FFE4B11E0F803100A739BC /* Sources */ = {

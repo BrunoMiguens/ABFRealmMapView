@@ -92,7 +92,7 @@ static CGFloat ABFScaledValueForValue(CGFloat value)
     
     _countLabel.numberOfLines = 1;
     
-    _countLabel.font = [UIFont boldSystemFontOfSize:12];
+    _countLabel.font = [UIFont boldSystemFontOfSize:20];
     
     _countLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
     
