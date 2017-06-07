@@ -31,14 +31,21 @@ static CGRect ABFCenterRect(CGRect rect, CGPoint center)
     return r;
 }
 
-static CGFloat ABFScaledValueForValue(CGFloat value)
+static CGFloat ABFScaledValueForValue(CGFloat scale, CGFloat value)
 {
-    return 1.0 / (1.0 + expf(-1 * ABFScaleFactorAlpha * powf(value, ABFScaleFactorBeta)));
+    CGFloat alpha = scale ?: ABFScaleFactorAlpha;
+    CGFloat beta = scale ?: ABFScaleFactorBeta;
+    alpha -= 0.1;
+    
+    return 1.0 / (1.0 + expf(-1 * alpha * powf(value, beta)));
 }
 
 #pragma mark - ABFClusterAnnotationView
 
 @interface ABFClusterAnnotationView()
+
+@property (nonatomic, assign) UIFont *fontLabel;
+@property (nonatomic, assign) CGFloat scaleFactor;
 
 @end
 
@@ -76,6 +83,21 @@ static CGFloat ABFScaledValueForValue(CGFloat value)
     return self;
 }
 
+- (void)updateClusterWithScaleFactor:(CGFloat)scale withFont:(UIFont *)font andCount:(NSUInteger)count
+{
+    self.scaleFactor = scale;
+    self.fontLabel = font;
+    
+    if (_countLabel) {
+        [_countLabel removeFromSuperview];
+    }
+    
+    [self setupLabel];
+    
+    [self setCount: count ?: 1];
+    
+}
+
 - (void)setupLabel
 {
     _countLabel = [[UILabel alloc] initWithFrame:self.frame];
@@ -92,7 +114,7 @@ static CGFloat ABFScaledValueForValue(CGFloat value)
     
     _countLabel.numberOfLines = 1;
     
-    _countLabel.font = [UIFont boldSystemFontOfSize:20];
+    _countLabel.font = self.fontLabel ?: [UIFont boldSystemFontOfSize:12];
     
     _countLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
     
@@ -107,8 +129,8 @@ static CGFloat ABFScaledValueForValue(CGFloat value)
     
     CGRect newBounds = CGRectMake(0,
                                   0,
-                                  roundf(44. * ABFScaledValueForValue(count)),
-                                  roundf(44. * ABFScaledValueForValue(count)));
+                                  roundf(44. * ABFScaledValueForValue(self.scaleFactor, count)),
+                                  roundf(44. * ABFScaledValueForValue(self.scaleFactor, count)));
     
     self.frame = ABFCenterRect(newBounds, self.center);
     

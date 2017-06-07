@@ -37,11 +37,6 @@
 @property (nonatomic, readonly, nonnull) UILabel *countLabel;
 
 /**
- *  The count of the cluster
- */
-@property (nonatomic, assign, nonnull) UIFont *fontLabel;
-
-/**
  *  Returns the safe location objects in the cluster annotation related to the cluster annotation view.
  *
  *  @param annotationView an instance of MKAnnotationView (returns nil if not ABFClusterAnnotationView subclass)
@@ -49,5 +44,8 @@
  *  @return array of safe location objects contained in the cluster related to the annotation view
  */
 + (nullable NSArray<ABFLocationSafeRealmObject *> *)safeObjectsForClusterAnnotationView:(nullable MKAnnotationView *)annotationView;
+
+
+- (void)updateClusterWithScaleFactor:(CGFloat)scale withFont:(UIFont *)font andCount:(NSUInteger)count;
 
 @end
